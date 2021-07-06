@@ -1,20 +1,28 @@
 #include "Screen.h"
 #include "Chip8.h"
-#include <Windows.h> // remove when i do timing correctly, only used for sleep
+#include "Audio.h"
+#include "CycleSynchronizationTimer.h"
 
-int main(int argc, char* argv[]) 
-{	
+constexpr int window_size_scale = 10;
+constexpr int cycles_per_second = 700;
+const char* rom_name = "roms/games/Pong.CH8";
+
+int main(int argc, char* argv[])
+{
 	Chip8 emulator;
-	emulator.load_rom("roms/games/Pong.CH8");
+	emulator.load_rom(rom_name);
 
-	Screen screen(10);
-
-	// TODO play audio
-	// TODO proper timing handling, timers decrement at 60hz, emulator plays at 700fps ish
+	Screen screen(window_size_scale);
+	Audio audio;
 
 	for (;;) {
+		CycleSynchronizationTimer syncrhonize_cycles_per_second(cycles_per_second);
+
 		emulator.cpu_cycle();
-		screen.draw(emulator.display);
-		Sleep(10);
+
+		if (emulator.display_updated)
+			screen.draw(emulator.display);
+
+		audio.play_sound_if_sound_timer_greater_than_zero(emulator.sound_timer);
 	}
 }

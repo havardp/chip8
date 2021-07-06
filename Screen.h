@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <array>
 
 class Screen{
 public:
@@ -9,5 +10,5 @@ public:
 	Screen(int window_scale);
 	~Screen();
 
-	void draw(void const* frame);
+	void draw(const void* frame);
 };

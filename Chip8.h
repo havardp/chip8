@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include <array>
+#include <chrono>
 #include "Keyboard.h"
 
 struct Instruction {
@@ -21,19 +23,23 @@ private:
 	uint16_t pc;
 	uint16_t I;
 	uint8_t delay_timer;
-	uint8_t sound_timer;
 	uint8_t v_register[16];
 	uint16_t stack[16];
 	uint16_t sp;
 	Keyboard keyboard;
+	std::chrono::time_point<std::chrono::steady_clock> time_since_last_timer_decrement;
 
 public:
 	uint8_t display[64 * 32];
+	uint8_t sound_timer;
+	bool display_updated;
+	bool doaudio;
 
 private:
 	typedef void (Chip8::* func_ptr)(const Instruction&);
 	func_ptr decode(const Instruction&);
 	void load_fontset();
+	bool time_to_decrement_timers();
 
 	void opcode_00E0(const Instruction&);
 	void opcode_00EE(const Instruction&);

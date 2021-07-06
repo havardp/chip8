@@ -12,7 +12,8 @@ Instruction::Instruction(uint16_t instr) :
 // CLS - clear display pixels
 void Chip8::opcode_00E0(const Instruction& instr)
 {	
-	memset(display, 0, sizeof(display));
+	display_updated = true;
+	memset(display, 0, 64 * 32);
 }
 
 // RET - return from subroutine
@@ -165,14 +166,14 @@ void Chip8::opcode_BNNN(const Instruction& instr)
 // RANDOM Vx, NN
 void Chip8::opcode_CXNN(const Instruction& instr)
 {
-	uint8_t random = rand() % 0xFF;
-	v_register[instr.X_regaddr] = random & instr.NN_operand;
+	v_register[instr.X_regaddr] = (rand() % 0xFF) & instr.NN_operand;
 }
-
+#include <iostream>
 // DRAW SPRITE
 #define BIT_ON(byte,pos) ((byte >> (7 - pos)) & 1)
 void Chip8::opcode_DXYN(const Instruction& instr)
 {
+	display_updated = true;
 	// Set the xpos and ypos to the value in VX and VY modulo 64 and 32
 	auto x_pos = v_register[instr.X_regaddr] % 64;
 	auto y_pos = v_register[instr.Y_regaddr] % 32;
@@ -184,10 +185,10 @@ void Chip8::opcode_DXYN(const Instruction& instr)
 	// Set VF to 0
 	v_register[0xF] = 0;
 
-	for (int dy = 0; dy < height; dy++) // TODO this might not actually draw last row and column, ill try to remove for now          && y_pos + dy < 32
+	for (int dy = 0; dy < height && y_pos + dy < 32; dy++)
 	{
 		auto sprite_byte = memory[I + dy];
-		for (int dx = 0; dx < 8; dx++)  //  && x_pos + dx < 64
+		for (int dx = 0; dx < 8 && x_pos + dx < 64; dx++)
 		{
 			if (BIT_ON(sprite_byte, dx))
 			{

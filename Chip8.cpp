@@ -1,5 +1,4 @@
 #include "Chip8.h"
-#include <iostream>
 #include <fstream>
 
 Chip8::Chip8() : 
@@ -13,6 +12,7 @@ Chip8::Chip8() :
 	stack{},
 	sp(0)
 {
+	time_since_last_timer_decrement = std::chrono::high_resolution_clock::now();
 	load_fontset();
 }
 
@@ -49,15 +49,32 @@ void Chip8::cpu_cycle()
 	// Increment program counter
 	pc += 2;
 
+	// Set display as not updated by default
+	display_updated = false;
+
 	// Decode instruction
 	func_ptr opcode_function_ptr = decode(instr);
 
 	// Execute instruction
 	(this->*opcode_function_ptr)(instr);
 
-	// Decrement audio and delay timer
-	if (sound_timer > 0) sound_timer--;
-	if (delay_timer > 0) delay_timer--;
+	// Decrement audio and delay timer at 60hz
+	if (time_to_decrement_timers())
+	{ 
+		if (sound_timer > 0) sound_timer--;
+		if (delay_timer > 0) delay_timer--;
+	}
+}
+
+// checks if 1000 / 60 seconds has passed since last timer decrement
+bool Chip8::time_to_decrement_timers()
+{
+	auto now = std::chrono::high_resolution_clock::now();
+
+	if (std::chrono::duration_cast<std::chrono::milliseconds>((now - time_since_last_timer_decrement)) > std::chrono::milliseconds(1000 / 60))
+		time_since_last_timer_decrement = now;
+
+	return time_since_last_timer_decrement == now;
 }
 
 // maps the instruction to the corresponding execute function pointer
@@ -210,7 +227,6 @@ void Chip8::load_rom(const std::string& filename)
 	}
 	else
 	{
-		std::cerr << "throw expection, couldn't read rom file";
+		throw std::invalid_argument("Couldn't read ROM file.");
 	}
-
 }

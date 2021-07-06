@@ -1,5 +1,3 @@
-#include <unordered_map>
-#include <sdl.h>
 #include "Keyboard.h"
 
 bool Keyboard::check_keydown(int polled_key)
