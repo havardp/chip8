@@ -5,7 +5,7 @@
 class Audio {
 public:
 	Audio();
-	void play_sound_if_sound_timer_greater_than_zero(uint8_t sound_timer);
+	void play_sound_if_sound_timer_greater_than_zero(bool sound);
 private:
 	void play();
 	void pause();

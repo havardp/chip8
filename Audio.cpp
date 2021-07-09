@@ -42,16 +42,28 @@ Audio::Audio()
 	if (want.format != have.format) SDL_LogError(SDL_LOG_CATEGORY_AUDIO, "Failed to get the desired AudioSpec");
 }
 
-void Audio::play_sound_if_sound_timer_greater_than_zero(uint8_t sound_timer)
+#include <iostream>
+void Audio::play_sound_if_sound_timer_greater_than_zero(bool sound)
 {
-	if (sound_timer > 0)
+	if (sound)
 	{
-		play();
+		SDL_PauseAudio(0);
 	}
-	else
-	{
-		pause();
-	}
+	else SDL_PauseAudio(1);
+	SDL_Delay(3);
+	//SDL_PauseAudio(1);
+	//SDL_Delay(10000);
+	//SDL_PauseAudio(1);
+	//if (sound_timer > 0)
+	//{
+	//	std::cout << "BEEP\n";
+	//	play();
+	//}
+	//else
+	//{
+	//	std::cout << "nobeep\n";
+	//	//pause();
+	//}
 }
 
 void Audio::play()

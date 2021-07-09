@@ -27,13 +27,11 @@ private:
 	uint16_t stack[16];
 	uint16_t sp;
 	Keyboard keyboard;
-	std::chrono::time_point<std::chrono::steady_clock> time_since_last_timer_decrement;
 
 public:
 	uint8_t display[64 * 32];
 	uint8_t sound_timer;
 	bool display_updated;
-	bool doaudio;
 
 private:
 	typedef void (Chip8::* func_ptr)(const Instruction&);
@@ -79,6 +77,7 @@ private:
 	void opcode_NOOP(const Instruction&);
 public:
 	Chip8();
-	void cpu_cycle();
+	void cpu_cycle(int cycles_per_second);
 	void load_rom(const std::string& filename);
+	void decrement_timers();
 };
