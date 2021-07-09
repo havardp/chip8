@@ -1,12 +1,18 @@
 #pragma once
 #include <SDL.h>
-#include <SDL_audio.h>
+
+// Credit to: https://github.com/tomdaley92/kiwi-8
 
 class Audio {
-public:
-	Audio();
-	void play_sound_if_sound_timer_greater_than_zero(bool sound);
 private:
-	void play();
-	void pause();
+    SDL_AudioDeviceID device;
+    unsigned char* audio_buffer;
+
+    double wave_position;
+    double wave_increment;
+
+public:
+    Audio();
+    ~Audio();
+    void Beep();
 };

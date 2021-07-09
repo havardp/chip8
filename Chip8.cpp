@@ -40,7 +40,6 @@ void Chip8::load_fontset()
 		memory[0x50 + i] = chip8_fontset[i];
 }
 
-#include <iostream>
 void Chip8::cpu_cycle(int cycles_per_second)
 {
 	// fetch instruction
