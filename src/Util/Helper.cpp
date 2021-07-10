@@ -1,17 +1,16 @@
-#pragma once
 #pragma warning(disable:4996)
 #include <string>
 #include <algorithm>
+#include "Helper.h"
 
-inline bool file_exists(const std::string& name) 
+bool file_exists(const std::string& name)
 {
 	std::string full_path = "roms/" + name;
-	if (FILE* file = fopen(full_path.c_str(), "r")) 
+	if (FILE* file = fopen(full_path.c_str(), "r"))
 	{
 		fclose(file);
 		return true;
 	}
-	
 	return false;
 }
 

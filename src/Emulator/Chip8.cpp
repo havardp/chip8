@@ -10,14 +10,12 @@ Chip8::Chip8() :
 	sound_timer(0),
 	display{},
 	stack{},
-	sp(0)
+	sp(0),
+	keyboard_state {false}
 {
 	memcpy(memory + 0x50, chip8_fontset, sizeof(chip8_fontset));
 }
 
-/// <summary>
-/// do a cpu cycle
-/// </summary>
 void Chip8::cpu_cycle()
 {
 	// fetch instruction
@@ -36,13 +34,6 @@ void Chip8::cpu_cycle()
 	(this->*opcode_function_ptr)(instr);
 }
 
-void Chip8::decrement_timers()
-{
-	if (sound_timer > 0) sound_timer--;
-	if (delay_timer > 0) delay_timer--;
-}
-
-// maps the instruction to the corresponding execute function pointer
 Chip8::func_ptr Chip8::decode(const Instruction& instr) 
 {
 	switch (instr.opcode)
@@ -168,6 +159,12 @@ Chip8::func_ptr Chip8::decode(const Instruction& instr)
 	default:
 		return &Chip8::opcode_NOOP;
 	}
+}
+
+void Chip8::decrement_timers()
+{
+	if (sound_timer > 0) sound_timer--;
+	if (delay_timer > 0) delay_timer--;
 }
 
 void Chip8::load_rom(const std::string& filename)

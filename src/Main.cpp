@@ -1,9 +1,9 @@
-#include "Chip8.h"
-#include "CycleSynchronizationTimer.h"
-#include "Helper.h"
+#include "Emulator/Chip8.h"
 #include "IO/Screen.h"
 #include "IO/Audio.h"
 #include "IO/Keyboard.h"
+#include "Timer/CycleSynchronizationTimer.h"
+#include "Util/Helper.h"
 
 int window_size_scale = 10;
 int cycles_per_second = 600;

@@ -1,8 +1,10 @@
 #include "Audio.h"
 
-constexpr int FREQUENCY = 48000;
-constexpr int TONE = 440;
-constexpr int SAMPLES_PER_FRAME = (FREQUENCY / 60) * 3;
+#define FREQUENCY 48000
+#define TONE 440
+#define SAMPLES_PER_FRAME ((FREQUENCY / 60) * 3)
+#define AMPLITUDE 7
+#define BIAS 127
 
 Audio::Audio() : 
     wave_position{ 0 }, 
@@ -39,12 +41,14 @@ void Audio::Beep()
 {
     if (SDL_GetQueuedAudioSize(device) < (SAMPLES_PER_FRAME * 2)) 
     {
-        // fill audio buffer with sine wave in range 120-134
+        // Fill audio buffer with sine wave in range 120-134
         for (int i = 0; i < SAMPLES_PER_FRAME; i++) 
         {
-            audio_buffer[i] = (unsigned char)((7 * sin(wave_position)) + 127);
+            audio_buffer[i] = (unsigned char)((AMPLITUDE * sin(wave_position)) + BIAS);
             wave_position += wave_increment;
         }
+
+        // Queue the audio
         SDL_QueueAudio(device, audio_buffer, SAMPLES_PER_FRAME);
     }
 }

@@ -1,5 +1,5 @@
 #include "CycleSynchronizationTimer.h"
-constexpr auto MICROSECONDS_PER_SECONDS = 1000000;
+#define MICROSECONDS_PER_SECONDS 1000000
 
 CycleSynchronizationTimer::CycleSynchronizationTimer(int wanted_cycles_per_second)
 {

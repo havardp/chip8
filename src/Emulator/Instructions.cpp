@@ -1,14 +1,5 @@
 #include "Chip8.h"
 
-Instruction::Instruction(uint16_t instr) :
-	opcode((instr & 0xF000) >> 12),
-	X_regaddr((instr & 0x0F00) >> 8),
-	Y_regaddr((instr & 0x00F0) >> 4),
-	N_operand(instr & 0x000F),
-	NN_operand(instr & 0x00FF),
-	NNN_operand(instr & 0x0FFF)
-{}
-
 // CLS - clear display pixels
 void Chip8::opcode_00E0(const Instruction& instr)
 {	

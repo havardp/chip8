@@ -10,11 +10,23 @@ struct Instruction {
 	uint8_t NN_operand;
 	uint16_t NNN_operand;
 
-	Instruction(uint16_t);
+	Instruction(uint16_t instr) :
+		opcode((instr & 0xF000) >> 12),
+		X_regaddr((instr & 0x0F00) >> 8),
+		Y_regaddr((instr & 0x00F0) >> 4),
+		N_operand(instr & 0x000F),
+		NN_operand(instr & 0x00FF),
+		NNN_operand(instr & 0x0FFF)
+	{}
 };
 
 class Chip8
 {
+public:
+	uint8_t display[64 * 32];
+	uint8_t sound_timer;
+	bool display_updated;
+	bool keyboard_state[16];
 private:
 	uint8_t memory[4096];
 	uint16_t pc;
@@ -44,11 +56,10 @@ private:
 	};
 
 public:
-	uint8_t display[64 * 32];
-	uint8_t sound_timer;
-	bool display_updated;
-	bool keyboard_state[16];
-
+	Chip8();
+	void cpu_cycle();
+	void load_rom(const std::string& filename);
+	void decrement_timers();
 private:
 	typedef void (Chip8::* func_ptr)(const Instruction&);
 	func_ptr decode(const Instruction&);
@@ -89,9 +100,4 @@ private:
 	void opcode_FX55(const Instruction&);
 	void opcode_FX65(const Instruction&);
 	void opcode_NOOP(const Instruction&);
-public:
-	Chip8();
-	void cpu_cycle();
-	void load_rom(const std::string& filename);
-	void decrement_timers();
 };
