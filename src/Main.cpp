@@ -9,7 +9,7 @@ int window_size_scale = 10;
 int cycles_per_second = 600;
 bool quit_flag = false;
 bool mute_flag = false;
-const char* default_game = "pong.ch8";
+const char* default_game = "breakout.ch8";
 
 int main(int argc, char* argv[])
 {

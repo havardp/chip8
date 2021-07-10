@@ -11,6 +11,5 @@ void Keyboard::update_keyboard_state(bool keyboard_state[], bool& quit_flag, boo
 
 	const Uint8* kb = SDL_GetKeyboardState(NULL);
 	for (int i = 0; i < 16; i++)
-		keyboard_state[i] = kb[keypadToScancode[i]];
-
+		keyboard_state[i] = kb[keypadToScancode[i]] != 0;
 }

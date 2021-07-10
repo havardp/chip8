@@ -131,7 +131,7 @@ void Chip8::opcode_8XY7(const Instruction& instr)
 // SHIFTLEFT Vx
 void Chip8::opcode_8XYE(const Instruction& instr)
 {
-	v_register[0xF] = (v_register[instr.X_regaddr] & 0x80) >> 7; // TODO this might be wrong
+	v_register[0xF] = (v_register[instr.X_regaddr] & 0x80) >> 7;
 	v_register[instr.X_regaddr] <<= 1;
 }
 
@@ -220,7 +220,7 @@ void Chip8::opcode_FX07(const Instruction& instr)
 void Chip8::opcode_FX0A(const Instruction& instr)
 {
 	bool found = false;
-	for (int i = 0; i < 16 || found; i++)
+	for (int i = 0; (i < 16 || !found); i++)
 	{
 		if (keyboard_state[i])
 		{
@@ -269,7 +269,7 @@ void Chip8::opcode_FX55(const Instruction& instr)
 {
 	for (auto i = 0; i <= instr.X_regaddr; i++)
 		memory[I + i] = v_register[i];
-}
+	}
 
 // LOAD V0...Vx, memory[I]
 void Chip8::opcode_FX65(const Instruction& instr)
