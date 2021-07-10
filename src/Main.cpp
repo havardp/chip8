@@ -1,9 +1,9 @@
-#include "Screen.h"
 #include "Chip8.h"
-#include "Audio.h"
 #include "CycleSynchronizationTimer.h"
-#include "Keyboard.h"
 #include "Helper.h"
+#include "IO/Screen.h"
+#include "IO/Audio.h"
+#include "IO/Keyboard.h"
 
 int window_size_scale = 10;
 int cycles_per_second = 600;
@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 	Audio audio;
 	Keyboard keyboard;
 
-	// If [file_path] command line argument is a valid file, use [file_path], else use pong.ch8 as default
+	// If [file_path] command line argument is a valid file, load [file_path] as rom, else load pong.ch8 rom as default
 	if (argc >= 2 && file_exists(argv[1]))
 		emulator.load_rom(argv[1]);
 	else
