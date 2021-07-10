@@ -9,6 +9,7 @@ int window_size_scale = 10;
 int cycles_per_second = 600;
 bool quit_flag = false;
 bool mute_flag = false;
+bool pause_flag = false;
 const char* default_game = "breakout.ch8";
 
 int main(int argc, char* argv[])
@@ -41,7 +42,10 @@ int main(int argc, char* argv[])
 		// Synchronize so that one cycle takes *cycle_per_second* cycles per second
 		CycleSynchronizationTimer syncrhonize_cycles_per_second(cycles_per_second);
 		// Update keyboard state and set potential quit or mute flags
-		keyboard.update_keyboard_state(emulator.keyboard_state, quit_flag, mute_flag);
+		keyboard.update_keyboard_state(emulator.keyboard_state, quit_flag, mute_flag, pause_flag);
+		// If game is paused we only want to check keyboard state until unpaused
+		if (pause_flag) continue;
+
 		// Run a cpu cycle / opcode
 		emulator.cpu_cycle();
 		// Update the screen if the display array has changed
@@ -57,6 +61,7 @@ int main(int argc, char* argv[])
 			if (emulator.sound_timer > 0 && !mute_flag) 
 				audio.Beep();
 		}
+		
 	}
 
 	return 0;

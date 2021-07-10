@@ -26,5 +26,5 @@ private:
 	};
 
 public:
-	void update_keyboard_state(bool keyboard_state[], bool& quit_flag, bool& mute_flag);
+	void update_keyboard_state(bool keyboard_state[], bool& quit_flag, bool& mute_flag, bool& pause_flag);
 };
