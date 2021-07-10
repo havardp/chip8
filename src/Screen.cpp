@@ -4,7 +4,7 @@ Screen::Screen(int window_scale)
 {
 	SDL_Init(SDL_INIT_VIDEO);
 
-	window = SDL_CreateWindow("Chip8 emulator", 100, 100, 64 * window_scale, 32 * window_scale, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("Chip8 emulator", 100, 100, 64 * window_scale, 32 * window_scale, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB332, SDL_TEXTUREACCESS_STREAMING, 64, 32);
 }

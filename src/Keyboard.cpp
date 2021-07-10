@@ -1,20 +1,16 @@
 #include "Keyboard.h"
 
-bool Keyboard::check_keydown(int polled_key)
+void Keyboard::update_keyboard_state(bool keyboard_state[], bool& quit_flag, bool& mute_flag)
 {
-	SDL_PumpEvents();
-	const Uint8* kb = SDL_GetKeyboardState(NULL);
-	return kb[keypadToScancode[polled_key]];
-}
+	SDL_PollEvent(&e);
+	if (e.type == SDL_QUIT)
+		quit_flag = true;
 
-int Keyboard::find_any_keydown()
-{
-	SDL_PumpEvents();
-	const Uint8* kb = SDL_GetKeyboardState(NULL);
+	if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_m)
+		mute_flag = !mute_flag;
 
+	const Uint8* kb = SDL_GetKeyboardState(NULL);
 	for (int i = 0; i < 16; i++)
-		if (kb[keypadToScancode[i]])
-			return i;
+		keyboard_state[i] = kb[keypadToScancode[i]];
 
-	return -1;
 }

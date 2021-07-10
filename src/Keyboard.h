@@ -4,6 +4,8 @@
 
 class Keyboard
 {
+private:
+	SDL_Event e;
 	std::unordered_map<int, int> keypadToScancode{
 		{1, SDL_SCANCODE_1},
 		{2, SDL_SCANCODE_2},
@@ -24,6 +26,5 @@ class Keyboard
 	};
 
 public:
-	bool check_keydown(int polled_key);
-	int find_any_keydown();
+	void update_keyboard_state(bool keyboard_state[], bool& quit_flag, bool& mute_flag);
 };

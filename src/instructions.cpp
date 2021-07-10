@@ -13,7 +13,7 @@ Instruction::Instruction(uint16_t instr) :
 void Chip8::opcode_00E0(const Instruction& instr)
 {	
 	display_updated = true;
-	memset(display, 0, 64 * 32);
+	memset(display, 0, sizeof(display));
 }
 
 // RET - return from subroutine
@@ -168,7 +168,7 @@ void Chip8::opcode_CXNN(const Instruction& instr)
 {
 	v_register[instr.X_regaddr] = (rand() % 0xFF) & instr.NN_operand;
 }
-#include <iostream>
+
 // DRAW SPRITE
 #define BIT_ON(byte,pos) ((byte >> (7 - pos)) & 1)
 void Chip8::opcode_DXYN(const Instruction& instr)
@@ -208,14 +208,14 @@ void Chip8::opcode_DXYN(const Instruction& instr)
 // SKIPIFKEY Vx
 void Chip8::opcode_EX9E(const Instruction& instr)
 {
-	if (keyboard.check_keydown(v_register[instr.X_regaddr]))
+	if (keyboard_state[v_register[instr.X_regaddr]])
 		pc += 2;
 }
 
 // SKIPIFNOTKEY Vx
 void Chip8::opcode_EXA1(const Instruction& instr)
 {
-	if (!keyboard.check_keydown(v_register[instr.X_regaddr]))
+	if (!keyboard_state[v_register[instr.X_regaddr]])
 		pc += 2;
 }
 
@@ -228,11 +228,16 @@ void Chip8::opcode_FX07(const Instruction& instr)
 // LOAD Vx, keypress (polled)
 void Chip8::opcode_FX0A(const Instruction& instr)
 {
-	int key = keyboard.find_any_keydown();
-	if (key == -1)
-		pc -= 2;
-	else
-		v_register[instr.X_regaddr] = key;
+	bool found = false;
+	for (int i = 0; i < 16 || found; i++)
+	{
+		if (keyboard_state[i])
+		{
+			v_register[instr.X_regaddr] = i;
+			found = true;
+		}
+	}
+	if (!found) pc -= 2;
 }
 
 // LOAD delay_timer, Vx
