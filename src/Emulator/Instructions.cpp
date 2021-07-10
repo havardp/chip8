@@ -220,7 +220,7 @@ void Chip8::opcode_FX07(const Instruction& instr)
 void Chip8::opcode_FX0A(const Instruction& instr)
 {
 	bool found = false;
-	for (int i = 0; (i < 16 || !found); i++)
+	for (int i = 0; (i < 16 && !found); i++)
 	{
 		if (keyboard_state[i])
 		{
