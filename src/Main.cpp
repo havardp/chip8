@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 	if (cycles_per_second_flag)
 		cycles_per_second = atoi(cycles_per_second_flag);
 
-	// get optional [-s window_size_scale] command line argument
+	// get optional [-w window_size_scale] command line argument
 	const char* window_size_scale_flag = get_commandline_flags(argv, argv + argc, "-w");
 	if (window_size_scale_flag)
 		window_size_scale = atoi(window_size_scale_flag);
@@ -38,15 +38,24 @@ int main(int argc, char* argv[])
 	// Main emulation loop
 	for (unsigned int i = 0; !quit_flag ; i++) 
 	{
+		// Synchronize so that one cycle takes *cycle_per_second* cycles per second
 		CycleSynchronizationTimer syncrhonize_cycles_per_second(cycles_per_second);
+		// Update keyboard state and set potential quit or mute flags
 		keyboard.update_keyboard_state(emulator.keyboard_state, quit_flag, mute_flag);
+		// Run a cpu cycle / opcode
 		emulator.cpu_cycle();
-		if (emulator.display_updated) screen.draw(emulator.display);
+		// Update the screen if the display array has changed
+		if (emulator.display_updated) 
+			screen.draw(emulator.display);
 
+		// Every 1/60 seconds
 		if (i % (cycles_per_second / 60) == 0)
 		{
+			// decrement sound and delay timers
 			emulator.decrement_timers();
-			if (emulator.sound_timer > 0 && !mute_flag) audio.Beep();
+			// play beeping sound if sound timer and not mute flag
+			if (emulator.sound_timer > 0 && !mute_flag) 
+				audio.Beep();
 		}
 	}
 
