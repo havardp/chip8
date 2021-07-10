@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 		if (emulator.display_updated) 
 			screen.draw(emulator.display);
 
-		// Every 1/60 seconds
+		// this codeblock gets run 60 times a second, independent of cycles per second
 		if (i % (cycles_per_second / 60) == 0)
 		{
 			// decrement sound and delay timers
