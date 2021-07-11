@@ -1,9 +1,20 @@
-# TODOS
+# Chip8 Emulator
+This is an emulator written in c++, using SDL2 blabla. Includes audio blabla
 
-fix readme
+[IMAGE OF GAME]
 
-sound using sdl and timing sync
+## Building on windows
 
-cleanup
+## Building on linux?
+
+## Usage
+```
+Chip8 [filename] ...
+```
 
 press m to mute
+press p to pause
+
+## Resources
+
+## License
