@@ -1,5 +1,6 @@
 #include "Chip8.h"
 #include <fstream>
+#include <cstring>
 
 Chip8::Chip8() : 
 	memory{},

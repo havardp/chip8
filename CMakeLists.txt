@@ -8,7 +8,7 @@ set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_LIST_DIR}/bin")
 include_directories(${SDL2_INCLUDE_DIRS})
 
 set(SOURCE_FILES 
-	src/main.cpp
+	src/Main.cpp
 	src/Emulator/Chip8.cpp
 	src/Emulator/Chip8.h
 	src/Emulator/Instructions.cpp

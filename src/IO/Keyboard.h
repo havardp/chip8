@@ -1,6 +1,6 @@
 #pragma once
 #include <unordered_map>
-#include <sdl.h>
+#include <SDL.h>
 
 class Keyboard
 {

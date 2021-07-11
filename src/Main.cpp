@@ -10,7 +10,7 @@ int cycles_per_second = 600;
 bool quit_flag = false;
 bool mute_flag = false;
 bool pause_flag = false;
-const char* default_game = "breakout.ch8";
+const char* default_game = "Breakout.ch8";
 
 int main(int argc, char* argv[])
 {

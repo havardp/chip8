@@ -1,4 +1,5 @@
 #include "Chip8.h"
+#include <cstring>
 
 // CLS - clear display pixels
 void Chip8::opcode_00E0(const Instruction& instr)
