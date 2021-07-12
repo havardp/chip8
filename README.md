@@ -8,7 +8,8 @@ add msbuild to path https://docs.microsoft.com/en-us/visualstudio/msbuild/whats-
 add cmake to path
 add sdl2 to CMAKE_PREFIX_PATH
 
-cmake -S . -B build -A x64
+cmake -S . -B build
+
 cmake --build build --config Release
 
 ## Building on linux
