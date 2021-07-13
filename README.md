@@ -21,13 +21,13 @@ for an example on how to do this.
 - SDL2
 - C++ compiler.
 
-```
+```bash
 # For example:
 $ sudo apt install cmake libsdl2-dev g++
 ```
 
 ## Building and compiling
-```
+```bash
 # Build
 $ cmake -S . -B build
 
@@ -47,7 +47,7 @@ parameters are **breakout.ch8**, **600** and **10** respectively.
 Chip8 [filename] [-S cycles-per-second] [-W window-size]
 ```
 
-```
+```bash
 # Example usage
 
 $ cd bin
