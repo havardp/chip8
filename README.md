@@ -1,7 +1,7 @@
 ﻿# Chip8 Emulator
 This emulator is written in C++, using SDL2 for graphics, audio and keyboard input handling. 
 My motivation for developing this emulator was mainly as an introductory project to learn C++,
-as well as gaining experience with how emulator works, which I've been interested in for some time.
+as well as gaining experience with how emulation works, which I've been interested in for some time.
 
 ![Image of emulator running Breakout game](images/gameplay.png)
 
