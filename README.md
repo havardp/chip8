@@ -47,17 +47,15 @@ parameters are **breakout.ch8**, **600** and **10** respectively.
 Chip8 [filename] [-S cycles-per-second] [-W window-size]
 ```
 
+Example usage:
 ```bash
-# Example usage
-
 $ cd bin
 
 # Example 1: Default values
 $ Chip8
 
-# Example 2: custom parameters
+# Example 2: Custom parameters
 $ Chip8 Tetris.ch8 -S 1000 -W 15
-
 ```
 
 
