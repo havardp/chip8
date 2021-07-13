@@ -22,7 +22,6 @@ for an example on how to do this.
 - C++ compiler.
 
 ```bash
-# For example:
 $ sudo apt install cmake libsdl2-dev g++
 ```
 
@@ -43,11 +42,10 @@ but more can be found by googling.
 The emulator takes a few optional parameters: **rom name**, 
 **instruction cycles per second**, **window size**. The default values for these
 parameters are **breakout.ch8**, **600** and **10** respectively.
-```
+``` 
 Chip8 [filename] [-S cycles-per-second] [-W window-size]
 ```
 
-Example usage:
 ```bash
 $ cd bin
 
