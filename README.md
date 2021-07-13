@@ -23,16 +23,16 @@ for an example on how to do this.
 
 ```
 # For example:
-sudo apt install cmake libsdl2-dev g++
+$ sudo apt install cmake libsdl2-dev g++
 ```
 
 ## Building and compiling
 ```
 # Build
-cmake -S . -B build
+$ cmake -S . -B build
 
 # Compile
-cmake --build build --config Release	
+$ cmake --build build --config Release	
 ```
 
 OR just launch the project in any IDE and it will recognize the cmake file ¯\\\_(ツ)\_/¯
@@ -50,13 +50,13 @@ Chip8 [filename] [-S cycles-per-second] [-W window-size]
 ```
 # Example usage
 
-cd bin
+$ cd bin
 
 # Example 1: Default values
-Chip8
+$ Chip8
 
 # Example 2: custom parameters
-Chip8 Tetris.ch8 -S 1000 -W 15
+$ Chip8 Tetris.ch8 -S 1000 -W 15
 
 ```
 
